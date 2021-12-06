@@ -17,7 +17,7 @@ export default function Navigation() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand
-        classname="navbarTitle"
+        className="navbarTitle"
         as={NavLink}
         to="/"
         style={{
