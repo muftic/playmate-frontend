@@ -7,7 +7,7 @@ import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import Finder2 from "./pages/Finder2";
+import Finder from "./pages/Finder";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 
@@ -30,7 +30,7 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/finder" element={<Finder2 />} />
+        <Route path="/finder" element={<Finder />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" elemet={<Profile />} />
