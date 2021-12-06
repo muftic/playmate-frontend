@@ -7,6 +7,7 @@ import { selectToken } from "../../store/user/selectors";
 import NavbarItem from "./NavbarItem";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
+import "../../App.css";
 
 export default function Navigation() {
   const token = useSelector(selectToken);
@@ -14,13 +15,22 @@ export default function Navigation() {
   const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={NavLink} to="/">
-        PlayMate
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar.Brand
+        classname="navbarTitle"
+        as={NavLink}
+        to="/"
+        style={{
+          fontFamily: "sans serif ",
+          fontStyle: "oblique",
+          paddingLeft: 20,
+        }}
+      >
+        <img src="tinpetfinal.png" alt="" style={{ width: 180 }} />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav style={{ width: "100%" }} fill>
+        <Nav bg="light" style={{ width: "100%" }} fill>
           <NavbarItem path="/" linkText="Home" />
           <NavbarItem path="/profile" linkText="Profile" />
           <NavbarItem path="/finder" linkText="Finder" />

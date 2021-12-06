@@ -1,0 +1,42 @@
+#tinpetTitle {
+  text-align: center;
+  color: aliceblue;
+  vertical-align: middle;
+}
+.navbarTitle {
+  font-family: "Courier New", Courier, monospace;
+}
+
+html {
+  background-color: beige;
+}
+.backgroundImage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+  background-image: url("/src/black-background.png");
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(0px);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  background-color: black;
+  filter: brightness(65%);
+  animation: fadein 2s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
