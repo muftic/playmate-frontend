@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import Finder from "./pages/Finder";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-
+import PetProfile from "./pages/PetProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
@@ -34,6 +34,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route exact path="/profile" element={<Profile />} />"
+        <Route exact path="/:petId" element={<PetProfile />} />"
       </Routes>
     </div>
   );

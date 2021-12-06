@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectUserPets } from "../../store/user/selectors";
+import { Link } from "react-router-dom";
+import { apiUrl } from "../../config/constants";
 //import { useEffect } from "react";
 export default function Profile() {
+  const slash = "/";
   const myPets = useSelector(selectUserPets);
   console.log(myPets);
   return (
@@ -26,11 +29,10 @@ export default function Profile() {
           {myPets
             ? myPets.map((pet, i) => (
                 <div key={i}>
-                  <h3>{pet.name}</h3>
-                  <p>name:</p>
-                  <p>age:</p>
-                  <p>gender:</p>
-                  <p>species:</p>
+                  <h3>
+                    aaa
+                    <Link to={slash + pet.id}>{pet.name}</Link>
+                  </h3>
                 </div>
               ))
             : null}
