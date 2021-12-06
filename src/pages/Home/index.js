@@ -86,7 +86,7 @@ export default function Home() {
                 objectFit: "cover",
               }}
               variant="top"
-              src="https://cdn3.vectorstock.com/i/1000x1000/53/92/loyalty-card-icon-outline-style-vector-27435392.jpg"
+              src="https://i.pinimg.com/originals/a4/96/3a/a4963a5bbdf113f099524638b8b933cf.jpg"
             />
             <Card.Body style={{ borderStyle: "solid" }}>
               <Card.Title style={{ color: "green" }}>
