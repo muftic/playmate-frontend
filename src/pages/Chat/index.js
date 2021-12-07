@@ -26,40 +26,7 @@ const ChatPage = () => {
 
     return new File([data], "userFoto.jpg", { type: "image/jpg" });
   };
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/");
-  //     return;
-  //   }
-  //   axios
-  //     .get("https://api.chatengine.io/users/me", {
-  //       headers: {
-  //         "project-id": process.env.REACT_APP_CHAT_ENGINE_ID,
-  //         "user-name": user.email,
-  //         "user-secret": user.password,
-  //       },
-  //     })
-  //     .then(() => {
-  //       setLoading(false);
-  //     })
-  //     .catch(() => {
-  //       let formdata = new FormData();
-  //       formdata.append("email", user.email);
-  //       formdata.append("username", user.email);
-  //       formdata.append("secret", "123");
-  //       getFile(user.imageUrl).then((avatar) => {
-  //         formdata.append("avatar", avatar, avatar.name);
-  //         axios
-  //           .post("https://api.chatengine.io/users", formdata, {
-  //             headers: {
-  //               "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY,
-  //             },
-  //           })
-  //           .then(() => setLoading(false))
-  //           .catch((error) => console.log(error));
-  //       });
-  //     });
-  // }, [user, navigate]);
+
   function createDirectChat(creds) {
     getOrCreateChat(
       creds,
