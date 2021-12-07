@@ -40,7 +40,8 @@ export const signUp = (userName, email, password) => {
       let formdata = new FormData();
       // formdata.append("email", response.data.email);
       formdata.append("username", response.data.email);
-      formdata.append("secret", response.data.password);
+      formdata.append("email", response.data.email);
+      formdata.append("secret", "123");
       console.log("form data", formdata);
       console.log("key", process.env.REACT_APP_CHAT_ENGINE_KEY);
 
