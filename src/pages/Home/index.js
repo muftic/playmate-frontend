@@ -1,6 +1,7 @@
 import "../../App.css";
 import { Card, CardGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 export default function Home() {
   return (
     <div>

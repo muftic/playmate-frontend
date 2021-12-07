@@ -1,5 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
+import { ChatEngine, getOrCreateChat } from "react-chat-engine";
 import { selectToken } from "./selectors";
 import {
   appLoading,
@@ -26,14 +27,27 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT });
 
-export const signUp = (name, email, password) => {
+export const signUp = (userName, email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
     try {
       const response = await axios.post(`${apiUrl}/auth/signup`, {
-        name,
+        userName,
         email,
         password,
+      });
+      console.log("response", response.data.userName, response.data.email);
+      let formdata = new FormData();
+      // formdata.append("email", response.data.email);
+      formdata.append("username", response.data.email);
+      formdata.append("secret", response.data.password);
+      console.log("form data", formdata);
+      console.log("key", process.env.REACT_APP_CHAT_ENGINE_KEY);
+
+      axios.post("https://api.chatengine.io/users", formdata, {
+        headers: {
+          "private-key": process.env.REACT_APP_CHAT_ENGINE_KEY,
+        },
       });
 
       dispatch(loginSuccess(response.data));
