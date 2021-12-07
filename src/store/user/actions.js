@@ -35,6 +35,7 @@ export const signUp = (userName, email, password) => {
         userName,
         email,
         password,
+        location: "Amsterdam",
       });
       console.log("response", response.data.userName, response.data.email);
       let formdata = new FormData();

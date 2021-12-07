@@ -11,7 +11,6 @@ import Finder from "./pages/Finder";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import ChatPage from "./pages/Chat";
-
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
