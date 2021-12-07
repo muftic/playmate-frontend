@@ -1,11 +1,9 @@
-const initialState = {
-  pets: [],
-};
+const initialState = { petWithUser: "martinaplaceres1@gmail.com" };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case "pet_ADD_PETS": {
-      return { ...state, pets: action.payload };
+    case "addPetWithUser": {
+      return { ...state, petWithUser: action.payload };
     }
     default:
       return state;

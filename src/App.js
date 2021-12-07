@@ -33,7 +33,7 @@ function App() {
         <Route path="/finder" element={<Finder />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" elemet={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </div>

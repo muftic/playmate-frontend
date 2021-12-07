@@ -6,8 +6,14 @@ import axios from "axios";
 import { useEffect } from "react";
 import { selectUser } from "../../store/user/selectors";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import {
+  showMessageWithTimeout,
+  setMessage,
+} from "../../store/appState/actions";
+import { fetchPetWithUser } from "../../store/pet/actions";
 function Finder() {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
@@ -15,7 +21,7 @@ function Finder() {
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
   const [childRefs, setChildRefs] = useState([]);
-
+  const [matchMessage, setMatchMessage] = useState("");
   useEffect(() => {
     (async () => {
       try {
@@ -66,14 +72,21 @@ function Finder() {
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < allPets.length) {
       await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
-      console.log(allPets[currentIndex].name, allPets[currentIndex].id);
+
       const { id } = allPets[currentIndex];
       if (dir === "right") {
-        await axios.post(`http://localhost:4000/likes`, {
+        const res = await axios.post(`http://localhost:4000/likes`, {
           giverId: user.id,
           receiverId: id,
           type: "play",
         });
+        console.log(res);
+
+        console.log(res.data.matchedPet);
+        if (res.data.matchedPet) {
+          dispatch(fetchPetWithUser(res.data.matchedPet));
+          setMatchMessage(res.data.matchedPet);
+        }
       }
     }
   };
@@ -96,6 +109,7 @@ function Finder() {
         href="https://fonts.googleapis.com/css?family=Alatsi&display=swap"
         rel="stylesheet"
       />
+      <p>hey you matched with: {matchMessage}</p>
       <h1 className="titletext">Your pet mate is right here!</h1>
       <div className="cardContainer">
         {allPets.map((character, index) => {
