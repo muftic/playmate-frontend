@@ -1,45 +1,50 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import axios from "axios";
+import React, { useState, useRef } from "react";
 // import TinderCard from '../react-tinder-card/index'
 import TinderCard from "react-tinder-card";
 import "../../Card.css";
+import axios from "axios";
+import { useEffect } from "react";
+import { selectUser } from "../../store/user/selectors";
+import { useSelector } from "react-redux";
 
-function Advanced() {
+function Finder() {
+  const user = useSelector(selectUser);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
   const [allPets, setAllPets] = useState([]);
-
-  const [currentIndex, setCurrentIndex] = useState(
-    Object.keys(allPets).length - 1
-  );
+  // used for outOfFrame closure
+  const currentIndexRef = useRef(currentIndex);
+  const [childRefs, setChildRefs] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const response = await axios.get(`http://localhost:4000/pets`);
-        console.log("All pets:", response.data);
+        console.log("All pets:", response.data.pets);
         setAllPets(response.data.pets);
+        setCurrentIndex(response.data.pets.length - 1);
+        //currentIndexRef.current = response.data.pets.length - 1;
+        console.log(`CIREF ${currentIndexRef}, CI: ${currentIndex}`);
       } catch (e) {
         console.log("error:", e);
       }
     })();
   }, []);
 
-  const currentIndexRef = useRef(currentIndex);
-
-  const childRefs = useMemo(
-    () =>
+  useEffect(() => {
+    setChildRefs(
       Array(allPets.length)
         .fill(0)
-        .map((i) => React.createRef()),
-    []
-  );
+        .map((i) => React.createRef())
+    );
+  }, [allPets]);
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
 
-  const canGoBack = currentIndex < Object.keys(allPets).length - 1;
+  const canGoBack = currentIndex < allPets.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
@@ -61,6 +66,15 @@ function Advanced() {
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < allPets.length) {
       await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+      console.log(allPets[currentIndex].name, allPets[currentIndex].id);
+      const { id } = allPets[currentIndex];
+      if (dir === "right") {
+        await axios.post(`http://localhost:4000/likes`, {
+          giverId: user.id,
+          receiverId: id,
+          type: "play",
+        });
+      }
     }
   };
 
@@ -73,8 +87,7 @@ function Advanced() {
   };
 
   return (
-    <div className="finderPage">
-      <div></div>
+    <div className="Finder">
       <link
         href="https://fonts.googleapis.com/css?family=Damion&display=swap"
         rel="stylesheet"
@@ -83,31 +96,37 @@ function Advanced() {
         href="https://fonts.googleapis.com/css?family=Alatsi&display=swap"
         rel="stylesheet"
       />
-      <h1 className="titletext">Find your Pet/Mate!</h1>
+      <h1 className="titletext">Your pet mate is right here!</h1>
       <div className="cardContainer">
-        {allPets
-          ? allPets.map((character, index) => (
-              <TinderCard
-                ref={childRefs[index]}
-                className="swipe"
-                key={character.name}
-                onSwipe={(dir) => swiped(dir, character.name, index)}
-                onCardLeftScreen={() => outOfFrame(character.name, index)}
+        {allPets.map((character, index) => {
+          const [firstPhoto] = character.photos;
+
+          const firstPhotoUrl = firstPhoto
+            ? firstPhoto.url
+            : "https://ih1.redbubble.net/image.2083415999.7103/st,small,507x507-pad,600x600,f8f8f8.jpg";
+          return (
+            <TinderCard
+              ref={childRefs[index]}
+              className="swipe"
+              key={character.name}
+              onSwipe={(dir) => swiped(dir, character.name, index)}
+              onCardLeftScreen={() => outOfFrame(character.name, index)}
+            >
+              <div
+                style={{
+                  backgroundImage: "url(" + firstPhotoUrl + ")",
+                }}
+                className="card"
               >
-                <div
-                  style={
-                    {
-                      // backgroundImage: "url(" + character.photos[1] + ")",
-                    }
-                  }
-                  className="card"
-                >
-                  {console.log("TIene fOto?", character.photos[1])}
-                  <h3 className="h3">{character.name}</h3>
-                </div>
-              </TinderCard>
-            ))
-          : null}
+                <p style={{ fontSize: 40, padding: 10 }}>
+                  {character.name}, {character.age}
+                  <br />
+                  {character.gender}
+                </p>
+              </div>
+            </TinderCard>
+          );
+        })}
       </div>
       <div className="buttons">
         <button
@@ -134,12 +153,10 @@ function Advanced() {
           You swiped {lastDirection}
         </h2>
       ) : (
-        <h2 className="infoText">
-          Swipe a card or press a button to get Restore Card button visible!
-        </h2>
+        ""
       )}
     </div>
   );
 }
 
-export default Advanced;
+export default Finder;
