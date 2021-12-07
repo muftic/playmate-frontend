@@ -34,6 +34,8 @@ export default function Navigation() {
           <NavbarItem path="/" linkText="Home" />
           <NavbarItem path="/profile" linkText="Profile" />
           <NavbarItem path="/finder" linkText="Finder" />
+          <NavbarItem path="/chat" linkText="Chat" />
+
           {loginLogoutControls}
         </Nav>
       </Navbar.Collapse>

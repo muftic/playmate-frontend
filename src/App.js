@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Finder from "./pages/Finder";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import ChatPage from "./pages/Chat";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" elemet={<Profile />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Routes>
     </div>
   );
